@@ -1,8 +1,5 @@
 public without sharing class getPokeInfo {
-    public class PokeInfo {
-        public string name {get; set;}
-        public string url {get; set;}
-    }
+    //Classe de Serviço que agrupa os métodos auxiliares.
 
     public static String getPokemonApiInfo (String endpoint){
         Http h = new Http();
@@ -15,12 +12,16 @@ public without sharing class getPokeInfo {
         return res.getBody();
     }
 
-    public static List<PokeInfo> parsePokeInfo(String jsonString) {
-        Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped(jsonString);
-        return (PokeInfo)jsonMap.get('results');  
+    //Ajustei o retorno do método para retornar a lista de resultados usando a classe wrapper que eu criei 
+    public static List<PokeInfoWrapper.results> parsePokeInfo(String jsonString) {
+        PokeInfoWrapper w = (PokeInfoWrapper) JSON.deserialize(jsonString, PokeInfoWrapper.class);
+        if (w.results != null) {
+            return w.results;
+        }
+        return new List<PokeInfoWrapper.results>();
     }
 
-    public string getNextURL (String jsonString){
+    public static String parseNextURL (String jsonString){
         Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped(jsonString);
         return (String)jsonMap.get('next');
     }
