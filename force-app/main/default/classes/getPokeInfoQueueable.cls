@@ -1,6 +1,6 @@
 public without sharing class getPokeInfoQueueable implements Queueable, Database.AllowsCallouts{
     public static final Integer MAX_CALLOUTS = 50;
-    public string endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=20';
+    public string endpoint;
     public string nextEndpoint = null;
 
     public getPokeInfoQueueable(String endpoint){
